@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Param Lokhande | Aspiring Data Analyst</title>
+  <meta name="description" content="Data Analyst portfolio of Param Lokhande — SQL, Python, Tableau and more." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ── Light Theme ─────────────────────────────────────── */
+    :root,
+    [data-theme="light"] {
+      --ink:        #0d0d0d;
+      --paper:      #f8f6f1;
+      --cream:      #ede9e0;
+      --accent:     #1a1aff;
+      --accent-lt:  #e8e8ff;
+      --muted:      #6b6b6b;
+      --card-bg:    #ffffff;
+      --border:     #e2ddd4;
+      --tag-bg:     #eeeeff;
+      --tag-txt:    #1a1aff;
+      --nav-bg:     rgba(248,246,241,0.92);
+      --shadow:     0 2px 16px rgba(0,0,0,.07);
+      --shadow-md:  0 4px 32px rgba(0,0,0,.10);
+      --toggle-track: #d1cdc6;
+    }
+
+    /* ── Dark Theme ──────────────────────────────────────── */
+    [data-theme="dark"] {
+      --ink:        #e8e6e0;
+      --paper:      #0f1117;
+      --cream:      #1a1d27;
+      --accent:     #4f8cff;
+      --accent-lt:  #1a2340;
+      --muted:      #8892a4;
+      --card-bg:    #161b27;
+      --border:     #252d3d;
+      --tag-bg:     #1a2340;
+      --tag-txt:    #7eb3ff;
+      --nav-bg:     rgba(15,17,23,0.92);
+      --shadow:     0 2px 16px rgba(0,0,0,.35);
+      --shadow-md:  0 4px 40px rgba(0,0,0,.50);
+      --toggle-track: #4f8cff;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', system-ui, sans-serif;
+      background: var(--paper);
+      color: var(--ink);
+      line-height: 1.6;
+      min-height: 100vh;
+      transition: background .35s ease, color .35s ease;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 200px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .top-bar {
+      height: 3px;
+      background: var(--accent);
+      position: relative;
+      z-index: 10;
+      transition: background .35s, box-shadow .35s;
+    }
+
+    [data-theme="dark"] .top-bar {
+      box-shadow: 0 0 20px rgba(79,140,255,.45);
+    }
+
+    /* ── Nav ─────────────────────────────────────────────── */
+    nav {
+      background: var(--nav-bg);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      transition: background .35s, border-color .35s;
+    }
+
+    .nav-inner {
+      max-width: 1100px;
+      margin: auto;
+      padding: 0 24px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-family: 'DM Mono', monospace;
+      font-size: .85rem;
+      color: var(--ink);
+      text-decoration: none;
+      letter-spacing: -.01em;
+      transition: color .35s;
+    }
+
+    .nav-logo span { color: var(--accent); transition: color .35s; }
+
+    .nav-links { display: flex; gap: 6px; align-items: center; }
+
+    .nav-links a {
+      font-size: .85rem;
+      font-weight: 500;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 6px 14px;
+      border-radius: 999px;
+      transition: background .2s, color .2s;
+    }
+
+    .nav-links a:hover { background: var(--cream); color: var(--ink); }
+
+    .nav-links a.cta {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .nav-links a.cta:hover { opacity: .88; }
+
+    [data-theme="dark"] .nav-links a.cta {
+      box-shadow: 0 0 14px rgba(79,140,255,.3);
+    }
+
+    /* ── Theme Toggle ────────────────────────────────────── */
+    .theme-toggle {
+      width: 52px;
+      height: 28px;
+      border: none;
+      border-radius: 999px;
+      background: var(--toggle-track);
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: background .35s;
+      position: relative;
+      padding: 0;
+    }
+
+    .theme-toggle:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+    }
+
+    .toggle-thumb {
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 1px 5px rgba(0,0,0,.28);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform .35s cubic-bezier(.34,1.56,.64,1);
+    }
+
+    [data-theme="dark"] .toggle-thumb {
+      transform: translateX(24px);
+    }
+
+    .icon-sun,
+    .icon-moon {
+      position: absolute;
+      width: 13px;
+      height: 13px;
+      transition: opacity .25s, transform .3s;
+    }
+
+    .icon-sun  { opacity: 1;  transform: rotate(0deg);   color: #f59e0b; }
+    .icon-moon { opacity: 0;  transform: rotate(-30deg); color: #475569; }
+
+    [data-theme="dark"] .icon-sun  { opacity: 0; transform: rotate(30deg); }
+    [data-theme="dark"] .icon-moon { opacity: 1; transform: rotate(0deg);  }
+
+    /* ── Layout ──────────────────────────────────────────── */
+    .site-wrapper {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .grid-main {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 32px;
+      align-items: start;
+      min-height: calc(100vh - 63px);
+    }
+
+    aside {
+      position: sticky;
+      top: 63px;
+      height: calc(100vh - 63px);
+      overflow: hidden;
+      padding: 40px 0;
+    }
+
+    main { padding: 40px 0 80px; }
+
+    @media (max-width: 800px) {
+      .grid-main { grid-template-columns: 1fr; min-height: unset; }
+      aside { position: static; height: auto; overflow: visible; padding: 28px 0 0; }
+      main  { padding: 24px 0 64px; }
+    }
+
+    @media (max-width: 600px) {
+      .hide-mobile { display: none; }
+      .profile-name { font-size: 1.3rem; }
+    }
+
+    /* ── Profile Card ────────────────────────────────────── */
+    .profile-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 28px;
+      box-shadow: var(--shadow);
+      height: 100%;
+      overflow-y: auto;
+      animation: fadeUp .5s ease both;
+      transition: background .35s, border-color .35s, box-shadow .35s;
+    }
+
+    .profile-card::-webkit-scrollbar { display: none; }
+    .profile-card { -ms-overflow-style: none; scrollbar-width: none; }
+
+    .avatar {
+      width: 76px;
+      height: 76px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 16px;
+      border: 3px solid var(--border);
+      box-shadow: 0 2px 12px rgba(0,0,0,.15);
+      transition: border-color .35s;
+    }
+
+    .profile-name {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: 1.55rem;
+      line-height: 1.2;
+      margin-bottom: 4px;
+      letter-spacing: -.02em;
+      color: var(--ink);
+      transition: color .35s;
+    }
+
+    .profile-title {
+      font-size: .88rem;
+      font-weight: 500;
+      color: var(--ink);
+      margin-bottom: 6px;
+      transition: color .35s;
+    }
+
+    .profile-location {
+      font-size: .8rem;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-bottom: 20px;
+      transition: color .35s;
+    }
+
+    .socials { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 22px; }
+
+    .social-link {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: var(--cream);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      text-decoration: none;
+      transition: background .2s, color .2s, transform .15s, border-color .35s;
+    }
+
+    .social-link:hover {
+      background: var(--accent-lt);
+      color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .social-link svg { width: 17px; height: 17px; fill: currentColor; }
+
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 18px 0;
+      transition: border-color .35s;
+    }
+
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: .68rem;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 10px;
+      transition: color .35s;
+    }
+
+    .skills-wrap { display: flex; flex-wrap: wrap; gap: 6px; }
+
+    .skill-tag {
+      font-size: .76rem;
+      font-weight: 500;
+      background: var(--tag-bg);
+      color: var(--tag-txt);
+      border-radius: 999px;
+      padding: 4px 12px;
+      transition: background .35s, color .35s;
+    }
+
+    /* ── Sections ────────────────────────────────────────── */
+    .section { margin-bottom: 52px; }
+
+    .section-heading {
+      font-family: 'DM Mono', monospace;
+      font-size: .68rem;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 18px;
+      transition: color .35s;
+    }
+
+    /* ── Project Cards ───────────────────────────────────── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 18px;
+    }
+
+    .project-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: transform .25s, box-shadow .25s, background .35s, border-color .35s;
+      animation: fadeUp .5s ease both;
+      display: flex;
+      flex-direction: column;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .project-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+    .project-card:nth-child(1) { animation-delay: .05s; }
+    .project-card:nth-child(2) { animation-delay: .10s; }
+    .project-card:nth-child(3) { animation-delay: .15s; }
+    .project-card:nth-child(4) { animation-delay: .20s; }
+
+    .project-thumb-placeholder {
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: linear-gradient(135deg, var(--accent-lt) 0%, var(--cream) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.4rem;
+      transition: background .35s;
+    }
+
+    .project-body {
+      padding: 16px 18px 18px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .project-title {
+      font-size: .93rem;
+      font-weight: 600;
+      line-height: 1.3;
+      color: var(--ink);
+      transition: color .35s;
+    }
+
+    .project-card:hover .project-title { text-decoration: underline; text-underline-offset: 3px; }
+
+    .project-desc {
+      font-size: .81rem;
+      color: var(--muted);
+      line-height: 1.55;
+      flex: 1;
+      transition: color .35s;
+    }
+
+    .project-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 2px; }
+
+    .project-tag {
+      font-size: .72rem;
+      font-weight: 500;
+      background: var(--tag-bg);
+      color: var(--tag-txt);
+      border-radius: 999px;
+      padding: 3px 10px;
+      transition: background .35s, color .35s;
+    }
+
+    .read-more {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: .79rem;
+      color: var(--accent);
+      font-weight: 500;
+      margin-top: 4px;
+      transition: color .35s;
+    }
+
+    /* ── Education ───────────────────────────────────────── */
+    .edu-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 22px 24px;
+      box-shadow: var(--shadow);
+      animation: fadeUp .5s ease .1s both;
+      transition: background .35s, border-color .35s, box-shadow .35s;
+    }
+
+    .edu-year {
+      font-family: 'DM Mono', monospace;
+      font-size: .76rem;
+      color: var(--accent);
+      margin-bottom: 6px;
+      transition: color .35s;
+    }
+
+    .edu-degree {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: var(--ink);
+      transition: color .35s;
+    }
+
+    .edu-desc {
+      font-size: .84rem;
+      color: var(--muted);
+      line-height: 1.6;
+      transition: color .35s;
+    }
+
+    .empty-state {
+      background: var(--card-bg);
+      border: 2px dashed var(--border);
+      border-radius: 18px;
+      padding: 40px 24px;
+      text-align: center;
+      color: var(--muted);
+      transition: background .35s, border-color .35s, color .35s;
+    }
+
+    .empty-state p { font-size: .87rem; margin-top: 6px; }
+
+    /* ── Footer ──────────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 22px 24px;
+      text-align: center;
+      font-size: .78rem;
+      color: var(--muted);
+      font-family: 'DM Mono', monospace;
+      position: relative;
+      z-index: 1;
+      transition: border-color .35s, color .35s;
+    }
+
+    footer a { color: var(--accent); text-decoration: none; transition: color .35s; }
+
+    /* ── Animations ──────────────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="top-bar"></div>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">param<span>lokhande</span>.dev</a>
+      <div class="nav-links">
+        <a href="#projects" class="hide-mobile">Projects</a>
+        <a href="#education" class="hide-mobile">Education</a>
+
+        <!-- Theme Toggle -->
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+          <div class="toggle-thumb">
+            <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="4"/>
+              <line x1="12" y1="2" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="22"/>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+              <line x1="2" y1="12" x2="4" y2="12"/><line x1="20" y1="12" x2="22" y2="12"/>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+            </svg>
+            <svg class="icon-moon" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+            </svg>
+          </div>
+        </button>
+
+        <a href="mailto:paramlokhande2004@gmail.com" class="cta">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="site-wrapper">
+    <div class="grid-main">
+
+      
+      <!-- Sidebar -->
+      <aside>
+        <div class="profile-card">
+          <img
+            class="avatar"
+            src="Image.jpeg"
+            alt="Param Lokhande"
+          />
+          <h1 class="profile-name">Param Lokhande</h1>
+          <p class="profile-title">Aspiring Data Analyst</p>
+          <p class="profile-location">
+            <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor" style="flex-shrink:0">
+              <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+            </svg>
+            Maharashtra, India
+          </p>
+
+          <div class="socials">
+            <a class="social-link" href="https://www.linkedin.com/in/param-lokhande-21b39a264/" target="_blank" rel="noopener" aria-label="LinkedIn">
+              <svg viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.338 16.338H13.67V12.16c0-.995-.017-2.277-1.387-2.277-1.39 0-1.601 1.086-1.601 2.207v4.248H8.014v-8.59h2.559v1.174h.037c.356-.675 1.227-1.387 2.526-1.387 2.703 0 3.203 1.778 3.203 4.092v4.711zM5.005 6.575a1.548 1.548 0 11-.003-3.096 1.548 1.548 0 01.003 3.096zm-1.337 9.763H6.34v-8.59H3.667v8.59zM17.668 1H2.328C1.595 1 1 1.581 1 2.298v15.403C1 18.418 1.595 19 2.328 19h15.34c.734 0 1.332-.582 1.332-1.299V2.298C19 1.581 18.402 1 17.668 1z" clip-rule="evenodd"/></svg>
+            </a>
+            <a class="social-link" href="https://github.com/param3903?tab=repositories" target="_blank" rel="noopener" aria-label="GitHub">
+              <svg viewBox="0 0 24 24"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+            </a>
+            <a class="social-link" href="https://www.kaggle.com/paramvijaylokhande" target="_blank" rel="noopener" aria-label="Kaggle">
+              <svg viewBox="0 0 32 32"><path transform="matrix(.527027 0 0 .527027 -30.632288 -22.45559)" d="M105.75 102.968c-.06.238-.298.357-.713.357H97.1c-.477 0-.89-.208-1.248-.625L82.746 86.028l-3.655 3.477v12.93c0 .595-.298.892-.892.892h-6.152c-.595 0-.892-.297-.892-.892V43.5c0-.593.297-.89.892-.89H78.2c.594 0 .892.298.892.89v36.288l15.692-15.87c.416-.415.832-.624 1.248-.624h8.204c.356 0 .593.15.713.445.12.357.09.624-.09.803L88.274 80.588l17.297 21.488c.237.238.297.535.18.892"/></svg>
+            </a>
+            <a class="social-link" href="mailto:paramlokhande2004@gmail.com" aria-label="Email">
+              <svg viewBox="0 0 24 24"><path d="M1.75 3h20.5C23.216 3 24 3.784 24 4.75v14a1.75 1.75 0 01-1.75 1.75H1.75A1.75 1.75 0 010 18.75v-14C0 3.784.784 3 1.75 3zM1.5 7.412V18.75c0 .138.112.25.25.25h20.5a.25.25 0 00.25-.25V7.412l-9.52 6.433a1.255 1.255 0 01-1.96 0L1.5 7.412zm0-2.662v.852l10.36 7a.25.25 0 00.28 0l10.36-7V4.75a.25.25 0 00-.25-.25H1.75a.25.25 0 00-.25.25z"/></svg>
+            </a>
+          </div>
+
+          <hr class="divider" />
+
+          <p class="section-label">Skills</p>
+          <div class="skills-wrap">
+            <span class="skill-tag">SQL</span>
+            <span class="skill-tag">Python</span>
+            <span class="skill-tag">Pandas</span>
+            <span class="skill-tag">NumPy</span>
+            <span class="skill-tag">Seaborn</span>
+            <span class="skill-tag">Matplotlib</span>
+            <span class="skill-tag">Tableau</span>
+            <span class="skill-tag">Excel</span>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <main>
+        <section class="section" id="projects">
+          <p class="section-heading">Projects</p>
+          <div class="projects-grid">
+
+            <a class="project-card" href="https://github.com/param3903?tab=repositories" target="_blank" rel="noopener">
+              <div class="project-thumb-placeholder">🏥</div>
+              <div class="project-body">
+                <p class="project-title">SQL — Hospital Database Project</p>
+                <p class="project-desc">Queried a hospital database spanning June 2018 – May 2019 to surface insights on patient outcomes, admissions, and resource use.</p>
+                <div class="project-tags">
+                  <span class="project-tag">SQL</span>
+                  <span class="project-tag">Excel</span>
+                  <span class="project-tag">Analytical Thinking</span>
+                </div>
+                <span class="read-more">Read more <svg width="12" height="12" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"/></svg></span>
+              </div>
+            </a>
+
+            <a class="project-card" href="https://github.com/param3903?tab=repositories" target="_blank" rel="noopener">
+              <div class="project-thumb-placeholder">🏅</div>
+              <div class="project-body">
+                <p class="project-title">SQL — Olympics History Database</p>
+                <p class="project-desc">Explored 120 years of Olympic history (1896–2016) from a Kaggle dataset, answering complex questions via advanced SQL queries.</p>
+                <div class="project-tags">
+                  <span class="project-tag">SQL</span>
+                  <span class="project-tag">Excel</span>
+                </div>
+                <span class="read-more">Read more <svg width="12" height="12" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"/></svg></span>
+              </div>
+            </a>
+
+            <a class="project-card" href="https://github.com/param3903?tab=repositories" target="_blank" rel="noopener">
+              <div class="project-thumb-placeholder">🪔</div>
+              <div class="project-body">
+                <p class="project-title">Python — Diwali Sales Analysis</p>
+                <p class="project-desc">Drew meaningful business insights from a Diwali sales dataset using Python libraries including Pandas, Seaborn, NumPy, and Matplotlib.</p>
+                <div class="project-tags">
+                  <span class="project-tag">Python</span>
+                  <span class="project-tag">Pandas</span>
+                  <span class="project-tag">Seaborn</span>
+                  <span class="project-tag">NumPy</span>
+                  <span class="project-tag">Matplotlib</span>
+                </div>
+                <span class="read-more">Read more <svg width="12" height="12" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"/></svg></span>
+              </div>
+            </a>
+
+            <a class="project-card" href="https://github.com/param3903?tab=repositories" target="_blank" rel="noopener">
+              <div class="project-thumb-placeholder">🎬</div>
+              <div class="project-body">
+                <p class="project-title">Tableau — Netflix Data Visualisation</p>
+                <p class="project-desc">Explored Netflix's extensive catalogue to uncover trends in movies and TV shows over time, built with advanced Tableau visualisations.</p>
+                <div class="project-tags">
+                  <span class="project-tag">Tableau</span>
+                  <span class="project-tag">Data Visualisation</span>
+                </div>
+                <span class="read-more">Read more <svg width="12" height="12" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"/></svg></span>
+              </div>
+            </a>
+
+          </div>
+        </section>
+
+        <section class="section" id="experience">
+          <p class="section-heading">Experience</p>
+          <div class="empty-state">
+            <span style="font-size:2rem">💼</span>
+            <p>No work experience listed yet — add yours soon!</p>
+          </div>
+        </section>
+
+        <section class="section" id="education">
+          <p class="section-heading">Education</p>
+          <div class="edu-card">
+            <p class="edu-year">2022 – 2025</p>
+            <p class="edu-degree">Bachelor of Business Administration</p>
+            <p class="edu-desc">Acquiring various skills related to Business Acumen and Analysis while developing a strong foundation in data-driven decision making.</p>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <footer>
+    Built from scratch &nbsp;·&nbsp;
+    <a href="https://github.com/param3903" target="_blank" rel="noopener">github.com/param3903</a>
+    &nbsp;·&nbsp; ©️ 2025 Param Lokhande
+  </footer>
+
+  <script>
+    const html   = document.documentElement;
+    const toggle = document.getElementById('themeToggle');
+
+    // Restore saved preference or respect OS setting
+    const saved = localStorage.getItem('theme');
+    if (saved) {
+      html.setAttribute('data-theme', saved);
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      html.setAttribute('data-theme', 'dark');
+    }
+
+    toggle.addEventListener('click', () => {
+      const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+    });
+  </script>
+</body>
+</html>
